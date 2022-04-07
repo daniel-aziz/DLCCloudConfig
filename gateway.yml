@@ -5,26 +5,56 @@ spring:
         locator:
           enabled: true
       routes:
-      - id: serviceA
-        uri: lb://service-A
+      - id: couponSystem-main
+        uri: lb://couponSystem-main
         predicates:
-        - Path=/srva/**
+        - Path=/couponSystem/**
         filters:
-        - RewritePath=/srva/(?<segment>.*), /$\{segment}
+        - RewritePath=/couponSystem/(?<segment>.*), /$\{segment}
         - name: Hystrix
           args:
-            name: monitor-srvA
-            fallbackUri: forward:/fallback/serviceA
-      - id: ServiceB
-        uri: lb://service-B
+            name: monitor-main
+            fallbackUri: forward:/fallback/couponSystem-main
+      - id: couponSystem-admin
+        uri: lb://couponSystem-admin
         predicates:
-        - Path=/srvb/**
+        - Path=/admin/**
         filters:
-        - RewritePath=/srvb/(?<segment>.*), /$\{segment}
+        - RewritePath=/admin/(?<segment>.*), /$\{segment}
         - name: Hystrix
           args:
-            name: monitor-srvB
-            fallbackUri: forward:/fallback/serviceB
+            name: monitor-admin
+            fallbackUri: forward:/fallback/couponSystem-admin
+      - id: couponSystem-company
+        uri: lb://couponSystem-company
+        predicates:
+        - Path=/company/**
+        filters:
+        - RewritePath=/company/(?<segment>.*), /$\{segment}
+        - name: Hystrix
+          args:
+            name: monitor-company
+            fallbackUri: forward:/fallback/couponSystem-company
+      - id: couponSystem-customer
+        uri: lb://couponSystem-customer
+        predicates:
+        - Path=/customer/**
+        filters:
+        - RewritePath=/customer/(?<segment>.*), /$\{segment}
+        - name: Hystrix
+          args:
+            name: monitor-customer
+            fallbackUri: forward:/fallback/couponSystem-customer
+      - id: couponSystem-guest
+        uri: lb://couponSystem-guest
+        predicates:
+        - Path=/guest/**
+        filters:
+        - RewritePath=/guest/(?<segment>.*), /$\{segment}
+        - name: Hystrix
+          args:
+            name: monitor-guest
+            fallbackUri: forward:/fallback/couponSystem-guest
       - id: MQActivityService
         uri: lb://activity
         predicates:
